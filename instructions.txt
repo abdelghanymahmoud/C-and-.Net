@@ -1,2 +1,0 @@
-create Army database
-make its language arabic_CI_AI
