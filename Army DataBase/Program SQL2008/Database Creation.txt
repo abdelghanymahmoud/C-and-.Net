@@ -1,0 +1,310 @@
+USE [Army]
+GO
+
+/****** Object:  Table [dbo].[Soldier]    Script Date: 4/2/2018 3:25:35 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Soldier](
+	[Name] [nvarchar](50) NULL,
+	[Military_number] [nvarchar](50) NOT NULL,
+	[National_Id] [nvarchar](50) NULL,
+	[Date_of_recruitment] [date] NULL,
+	[Date_of_ending_service] [date] NULL,
+ CONSTRAINT [PK_Soldier] PRIMARY KEY CLUSTERED 
+(
+	[Military_number] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+USE [Army]
+GO
+
+/****** Object:  Table [dbo].[XSoldier]    Script Date: 4/2/2018 3:27:11 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[XSoldier](
+	[Name] [nvarchar](50) NULL,
+	[Military_number] [nvarchar](50) NOT NULL,
+	[National_Id] [nvarchar](50) NULL,
+	[Date_of_recruitment] [date] NULL,
+	[Date_of_ending_service] [date] NULL,
+ CONSTRAINT [PK_XSoldier] PRIMARY KEY CLUSTERED 
+(
+	[Military_number] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+
+USE [Army]
+GO
+
+/****** Object:  Table [dbo].[Fitness]    Script Date: 4/2/2018 3:18:14 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Fitness](
+	[Military_number] [nvarchar](50) NOT NULL,
+	[date] [date] NOT NULL,
+	[push_up] [int] NULL,
+	[sit_up] [int] NULL,
+	[pull_up] [int] NULL,
+	[run] [int] NULL,
+	[jump] [int] NULL,
+ CONSTRAINT [PK_Fitness] PRIMARY KEY CLUSTERED 
+(
+	[Military_number] ASC,
+	[date] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[Fitness]  WITH CHECK ADD  CONSTRAINT [FK_Fitness_Soldier] FOREIGN KEY([Military_number])
+REFERENCES [dbo].[Soldier] ([Military_number])
+GO
+
+ALTER TABLE [dbo].[Fitness] CHECK CONSTRAINT [FK_Fitness_Soldier]
+GO
+
+
+USE [Army]
+GO
+
+/****** Object:  Table [dbo].[Punishment]    Script Date: 4/2/2018 3:24:54 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Punishment](
+	[Military_number] [nvarchar](50) NOT NULL,
+	[date] [date] NOT NULL,
+	[Type] [nvarchar](50) NULL,
+	[Penalty] [nvarchar](50) NULL,
+ CONSTRAINT [PK_Punishment] PRIMARY KEY CLUSTERED 
+(
+	[Military_number] ASC,
+	[date] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[Punishment]  WITH CHECK ADD  CONSTRAINT [FK_Punishment_Soldier] FOREIGN KEY([Military_number])
+REFERENCES [dbo].[Soldier] ([Military_number])
+GO
+
+ALTER TABLE [dbo].[Punishment] CHECK CONSTRAINT [FK_Punishment_Soldier]
+GO
+
+
+USE [Army]
+GO
+
+/****** Object:  Table [dbo].[Shooting]    Script Date: 4/2/2018 3:25:19 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Shooting](
+	[Military_number] [nvarchar](50) NOT NULL,
+	[gun_type] [nvarchar](50) NULL,
+	[correct_shoot] [int] NULL,
+	[date] [date] NOT NULL,
+ CONSTRAINT [PK_Shooting] PRIMARY KEY CLUSTERED 
+(
+	[Military_number] ASC,
+	[date] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[Shooting]  WITH CHECK ADD  CONSTRAINT [FK_Shooting_Soldier] FOREIGN KEY([Military_number])
+REFERENCES [dbo].[Soldier] ([Military_number])
+GO
+
+ALTER TABLE [dbo].[Shooting] CHECK CONSTRAINT [FK_Shooting_Soldier]
+GO
+
+
+USE [Army]
+GO
+
+/****** Object:  Table [dbo].[Vacation]    Script Date: 4/2/2018 3:26:03 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[Vacation](
+	[Military_number] [nvarchar](50) NOT NULL,
+	[Start_time] [date] NOT NULL,
+	[End_time] [date] NULL,
+ CONSTRAINT [PK_Vacation] PRIMARY KEY CLUSTERED 
+(
+	[Military_number] ASC,
+	[Start_time] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[Vacation]  WITH CHECK ADD  CONSTRAINT [FK_Vacation_Soldier] FOREIGN KEY([Military_number])
+REFERENCES [dbo].[Soldier] ([Military_number])
+GO
+
+ALTER TABLE [dbo].[Vacation] CHECK CONSTRAINT [FK_Vacation_Soldier]
+GO
+
+
+USE [Army]
+GO
+
+/****** Object:  Table [dbo].[XFitness]    Script Date: 4/2/2018 3:26:20 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[XFitness](
+	[Military_number] [nvarchar](50) NOT NULL,
+	[date] [date] NOT NULL,
+	[push_up] [int] NULL,
+	[sit_up] [int] NULL,
+	[pull_up] [int] NULL,
+	[run] [int] NULL,
+	[jump] [int] NULL,
+ CONSTRAINT [PK_XFitness] PRIMARY KEY CLUSTERED 
+(
+	[Military_number] ASC,
+	[date] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[XFitness]  WITH CHECK ADD  CONSTRAINT [FK_XFitness_XSoldier] FOREIGN KEY([Military_number])
+REFERENCES [dbo].[XSoldier] ([Military_number])
+GO
+
+ALTER TABLE [dbo].[XFitness] CHECK CONSTRAINT [FK_XFitness_XSoldier]
+GO
+
+
+USE [Army]
+GO
+
+/****** Object:  Table [dbo].[XPunishment]    Script Date: 4/2/2018 3:26:40 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[XPunishment](
+	[Military_number] [nvarchar](50) NOT NULL,
+	[date] [date] NOT NULL,
+	[Type] [nvarchar](50) NULL,
+	[Penalty] [nvarchar](50) NULL,
+ CONSTRAINT [PK_XPunishment] PRIMARY KEY CLUSTERED 
+(
+	[Military_number] ASC,
+	[date] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[XPunishment]  WITH CHECK ADD  CONSTRAINT [FK_XPunishment_XSoldier] FOREIGN KEY([Military_number])
+REFERENCES [dbo].[XSoldier] ([Military_number])
+GO
+
+ALTER TABLE [dbo].[XPunishment] CHECK CONSTRAINT [FK_XPunishment_XSoldier]
+GO
+
+
+USE [Army]
+GO
+
+/****** Object:  Table [dbo].[XShooting]    Script Date: 4/2/2018 3:26:55 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[XShooting](
+	[Military_number] [nvarchar](50) NOT NULL,
+	[gun_type] [nvarchar](50) NULL,
+	[correct_shoot] [int] NULL,
+	[date] [date] NOT NULL,
+ CONSTRAINT [PK_XShooting] PRIMARY KEY CLUSTERED 
+(
+	[Military_number] ASC,
+	[date] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[XShooting]  WITH CHECK ADD  CONSTRAINT [FK_XShooting_XSoldier] FOREIGN KEY([Military_number])
+REFERENCES [dbo].[XSoldier] ([Military_number])
+GO
+
+ALTER TABLE [dbo].[XShooting] CHECK CONSTRAINT [FK_XShooting_XSoldier]
+GO
+
+
+USE [Army]
+GO
+
+/****** Object:  Table [dbo].[XVacation]    Script Date: 4/2/2018 3:27:59 PM ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[XVacation](
+	[Military_number] [nvarchar](50) NOT NULL,
+	[Start_time] [date] NOT NULL,
+	[End_time] [date] NULL,
+ CONSTRAINT [PK_XVacation] PRIMARY KEY CLUSTERED 
+(
+	[Military_number] ASC,
+	[Start_time] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[XVacation]  WITH CHECK ADD  CONSTRAINT [FK_XVacation_XSoldier] FOREIGN KEY([Military_number])
+REFERENCES [dbo].[XSoldier] ([Military_number])
+GO
+
+ALTER TABLE [dbo].[XVacation] CHECK CONSTRAINT [FK_XVacation_XSoldier]
+GO
+
+
